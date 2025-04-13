@@ -1,4 +1,4 @@
-package org.eldrygo.XUtils.Handlers;
+package org.eldrygo.XUtils.Handlers.Commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -6,11 +6,18 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.eldrygo.XUtils.Utils.ChatUtils;
+import org.eldrygo.XUtils.Utils.PlayerUtils;
 import org.jetbrains.annotations.NotNull;
 
 public class SpeedCommand implements CommandExecutor {
 
-    private ChatUtils chatUtils;
+    private final ChatUtils chatUtils;
+    private final PlayerUtils playerUtils;
+
+    public SpeedCommand(ChatUtils chatUtils, PlayerUtils playerUtils) {
+        this.chatUtils = chatUtils;
+        this.playerUtils = playerUtils;
+    }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
@@ -43,12 +50,15 @@ public class SpeedCommand implements CommandExecutor {
         String mode = null;
         if (args.length >= 2 && (args[1].equalsIgnoreCase("walk") || args[1].equalsIgnoreCase("fly"))) {
             mode = args[1].toLowerCase();
+        } else if (args.length >= 2 && (!args[1].equalsIgnoreCase("walk") && !args[1].equalsIgnoreCase("fly"))) {
+            sender.sendMessage(chatUtils.getMessage("speed.error.mode_not_valid", null));
+            return true;
         }
 
         // Determinar el objetivo
         if (args.length >= 3 && args[2].equals("*")) {
             // Cambiar a todos los jugadores
-            if (!sender.hasPermission("xutils.speed.all")) {
+            if (!sender.hasPermission("xutils.speed.all") && !sender.hasPermission("xutils.speed.*") && !sender.hasPermission("xutils.admin") && !sender.isOp()) {
                 sender.sendMessage(chatUtils.getMessage("error.no_permission", null));
                 return true;
             }
@@ -57,11 +67,12 @@ public class SpeedCommand implements CommandExecutor {
                     sender instanceof Player && ((Player) sender).isFlying() ? "fly" : "walk"
             );
             int affected = 0;
-            for (Player target : Bukkit.getOnlinePlayers()) {
+            for (Player target : playerUtils.getAllPlayers()) {
                 applySpeed(target, multiplier, actualMode);
                 if (!target.equals(sender)) {
-                    target.sendMessage(chatUtils.getMessage("speed.success.other." + actualMode, target)
-                            .replace("%sender%", sender.getName()));
+                    target.sendMessage(chatUtils.getMessage("speed.success.self." + actualMode, target)
+                            .replace("%sender%", sender.getName())
+                            .replace("%multiplier%", String.valueOf(multiplier)));
                 }
                 affected++;
             }
@@ -94,12 +105,12 @@ public class SpeedCommand implements CommandExecutor {
             isSelf = true;
         }
 
-        if (isSelf && !sender.hasPermission("xutils.speed.self")) {
+        if (isSelf && !sender.hasPermission("xutils.speed.self") && !sender.hasPermission("xutils.speed.*") && !sender.hasPermission("xutils.admin") && !sender.isOp()) {
             sender.sendMessage(chatUtils.getMessage("error.no_permission", null));
             return true;
         }
 
-        if (!isSelf && !sender.hasPermission("xutils.speed.others")) {
+        if (!isSelf && !sender.hasPermission("xutils.speed.others") && !sender.hasPermission("xutils.speed.*") && !sender.hasPermission("xutils.admin") && !sender.isOp()) {
             sender.sendMessage(chatUtils.getMessage("error.no_permission", null));
             return true;
         }
@@ -115,9 +126,11 @@ public class SpeedCommand implements CommandExecutor {
                     .replace("%multiplier%", String.valueOf(multiplier)));
         } else {
             sender.sendMessage(chatUtils.getMessage("speed.success.other." + mode, target)
-                    .replace("%sender%", sender.getName()));
-            target.sendMessage(chatUtils.getMessage("speed.success.other." + mode, target)
-                    .replace("%sender%", sender.getName()));
+                    .replace("%multiplier%", String.valueOf(multiplier))
+                    .replace("%target%", String.valueOf(target)));
+            target.sendMessage(chatUtils.getMessage("speed.success.self." + mode, target)
+                    .replace("%sender%", sender.getName())
+                    .replace("%multiplier%", String.valueOf(multiplier)));
         }
 
         return true;

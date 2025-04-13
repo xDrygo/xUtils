@@ -1,0 +1,69 @@
+prefix: "#9ae5ff&lx&r&lUtils &8»&r"
+
+xutils:
+  command:
+    reload:
+      error: "%prefix% #FF0000🚫 Failed on plugin reload."
+      success: "%prefix% #a0ff72✔ Plugin reloaded successfully."
+connection:
+  join_message: "#a0ff72&l + &r%target_prefix% %target% #a0ff72se ha unido al servidor."
+  leave_message: "#ff7272&l - &r%target_prefix% %target% #ff7272ha salido del servidor."
+heal:
+  self:
+    success: "%prefix% #a0ff72✔ You was healed."
+    only_player: "%prefix% #FF0000🚫 You can only heal yourself as a player."
+  other:
+    sender: "%prefix% #a0ff72✔ You healed %target%."
+    target: "%prefix% #a0ff72✔ You was healed by %sender%."
+    player_not_found: "%prefix% #FF0000🚫 Can't find player %arg%."
+  all: "%prefix% #a0ff72✔ You healed %players% players."
+speed:
+  error:
+    usage:  "%prefix% #FF0000🚫 Incorrect usage. &r&7Use &f/speed <multiplier> <walk/fly> <player>"
+    self_as_console: "%prefix% #FF0000🚫 Need to specify a player when use as console."
+    mode_not_valid: "%prefix% #FF0000🚫 Invalid Mode: &7Valid modes: fly / walk"
+    multiplier_not_valid: "%prefix% #FF0000🚫 Multiplier need to be a valid integer."
+    multiplier_not_in_range: "%prefix% #FF0000🚫 Multiplier must be > 0 and ≤ 10."
+    player_not_found: "%prefix% #FF0000🚫 Can't find player %arg%."
+  success:
+    self:
+      walk: "%prefix% #a0ff72✔ Your walk speed is now %multiplier%x"
+      fly: "%prefix% #a0ff72✔ Your fly speed is now %multiplier%x"
+    other:
+      walk: "%prefix% #a0ff72✔ You changed %target%'s walk speed to %multiplier%x"
+      fly: "%prefix% #a0ff72✔ You changed %target%'s fly speed to %multiplier%x"
+    all: "%prefix% #a0ff72✔ You changed the %mode% speed to %multiplier% to %players% players."
+warp:
+  error:
+    invalid_coordinates: "%prefix% #FF0000🚫 The provided coordinates are invalid."
+    invalid_yaw: "%prefix% #FF0000🚫 The yaw value is invalid."
+    invalid_pitch: "%prefix% #FF0000🚫 The pitch value is invalid."
+    invalid_world: "%prefix% #FF0000🚫 Can't find world %world%."
+    console_missing_coordinates: "%prefix% #FF0000🚫 You must provide coordinates (X, Y, Z) when using this command from the console."
+    missing_warp_name: "%prefix% #FF0000🚫 You must specify a warp name."
+    missing_player: "%prefix% #FF0000🚫 You must specify a player to teleport."
+    warp_not_found: "%prefix% #FF0000🚫 Can't find warp %warp%."
+    player_not_found: "%prefix% #FF0000🚫 Can't find player %arg%."
+    only_players: "%prefix% #FF0000🚫 You can only tp yourself as a player."
+  set:
+    success: "%prefix% #a0ff72✔ Warp '%warp%' has been successfully set."
+  del:
+    success: "%prefix% #a0ff72✔ Warp '%warp%' has been successfully deleted."
+  teleport:
+    success:
+      all:
+        sender: "%prefix% #a0ff72✔ You have teleported all players to warp %warp%."
+        target: "%prefix% #a0ff72✔ Teleported you to warp %warp%."
+      other:
+        sender: "%prefix% #a0ff72✔ You teleported %target% to warp %warp%."
+        target: "%prefix% #a0ff72✔ %sender% has teleported you to warp %warp%."
+      self: "%prefix% #a0ff72✔ You have teleported to warp %warp%."
+firstspawn:
+  error:
+    only_players: "%prefix% #FF0000🚫 You can only set the first spawn in-game."
+  set:
+    success: "%prefix% #a0ff72✔ Sucessfully set first spawn."
+error:
+  no_permission: "%prefix% #FF0000🚫 You have no permission to use this command."
+
+# #FF0000🚫 #ff7272❌ #fff18d📰 #a0ff72✔

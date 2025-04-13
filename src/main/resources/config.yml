@@ -1,0 +1,5 @@
+settings:
+  all_targeted_commands_bypass:
+    enabled: true
+    player_list:
+      - Player

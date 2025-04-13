@@ -1,4 +1,4 @@
-package org.eldrygo.XUtils.Handlers;
+package org.eldrygo.XUtils.Handlers.Commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -6,11 +6,18 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.eldrygo.XUtils.Utils.ChatUtils;
+import org.eldrygo.XUtils.Utils.PlayerUtils;
 import org.jetbrains.annotations.NotNull;
 
 public class HealCommand implements CommandExecutor {
 
-    private ChatUtils chatUtils;
+    private final ChatUtils chatUtils;
+    private final PlayerUtils playerUtils;
+
+    public HealCommand(ChatUtils chatUtils, PlayerUtils playerUtils) {
+        this.chatUtils = chatUtils;
+        this.playerUtils = playerUtils;
+    }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
@@ -22,7 +29,7 @@ public class HealCommand implements CommandExecutor {
                 return true;
             }
 
-            if (!sender.hasPermission("xutils.heal.self")) {
+            if (!sender.hasPermission("xutils.heal.self") && !sender.hasPermission("xutils.heal.*") && !sender.hasPermission("xutils.admin") && !sender.isOp()) {
                 sender.sendMessage(chatUtils.getMessage("error.no_permission", null));
                 return true;
             }
@@ -35,13 +42,13 @@ public class HealCommand implements CommandExecutor {
         } else {
             // Curar a todos con *
             if (args[0].equals("*")) {
-                if (!sender.hasPermission("xutils.heal.all")) {
+                if (!sender.hasPermission("xutils.heal.all") && !sender.hasPermission("xutils.heal.*") && !sender.hasPermission("xutils.admin") && !sender.isOp()) {
                     sender.sendMessage(chatUtils.getMessage("error.no_permission", null));
                     return true;
                 }
 
                 int affected = 0;
-                for (Player target : Bukkit.getOnlinePlayers()) {
+                for (Player target : playerUtils.getAllPlayers()) {
                     healPlayer(target);
                     if (!sender.equals(target)) {
                         target.sendMessage(chatUtils.getMessage("heal.other.target", target).replace("%sender%", sender.getName()));
@@ -54,7 +61,7 @@ public class HealCommand implements CommandExecutor {
             }
 
             // Curar a otro jugador específico
-            if (!sender.hasPermission("xutils.heal.others")) {
+            if (!sender.hasPermission("xutils.heal.others") && !sender.hasPermission("xutils.heal.*") && !sender.hasPermission("xutils.admin") && !sender.isOp()) {
                 sender.sendMessage(chatUtils.getMessage("error.no_permission", null));
                 return true;
             }

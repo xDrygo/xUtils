@@ -1,0 +1,67 @@
+main: org.eldrygo.XUtils.XUtils
+name: xUtils
+version: 0.1.01
+api-version: 1.21
+authors: [Drygo]
+softdepend:
+  - PlaceholderAPI
+  - LuckPerms
+commands:
+  xutils:
+    description: "Plugin main command."
+  speed:
+    description: "Changes the walk or fly speed."
+  heal:
+    description: "Heal and feeds the executor."
+  warp:
+    description: "Manage warp system."
+  firstspawn:
+    description: "Manage firstspawn system."
+permissions:
+  xutils:
+    default: false
+    children:
+      xutils.reload:
+        default: false
+      xutils.speed:
+        default: false
+        children:
+          xutils.speed.others:
+            default: false
+          xutils.speed.self:
+            default: false
+          xutils.speed.all:
+            default: false
+          xutils.speed.*:
+            default: false
+      xutils.heal:
+        default: false
+        children:
+          xutils.heal.self:
+            default: false
+          xutils.heal.others:
+            default: false
+          xutils.heal.all:
+            default: false
+          xutils.heal.*:
+            default: false
+      xutils.warp:
+        default: false
+        children:
+          xutils.warp.set:
+            default: false
+          xutils.warp.del:
+            default: false
+          xutils.warp.tp:
+            default: false
+            children:
+              xutils.warp.tp.self:
+                default: false
+              xutils.warp.tp.others:
+                default: false
+              xutils.warp.tp.all:
+                default: false
+              xutils.warp.tp.*:
+                default: false
+      xutils.firstspawn.set:
+        default: false
