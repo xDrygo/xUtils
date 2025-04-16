@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.eldrygo.XUtils.Managers.VanishManager;
 import org.eldrygo.XUtils.Utils.ChatUtils;
+import org.jetbrains.annotations.NotNull;
 
 public class VanishCommand implements CommandExecutor {
 
@@ -19,7 +20,7 @@ public class VanishCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String label, String @NotNull [] args) {
 
         if (!sender.hasPermission("xutils.vanish.self") && !sender.hasPermission("xutils.vanish.others")) {
             sender.sendMessage(chatUtils.getMessage("error.no_permission", null));
@@ -40,6 +41,7 @@ public class VanishCommand implements CommandExecutor {
                     return true;
                 }
                 vanishManager.setVanished(senderPlayer, true);
+                assert senderPlayer != null;
                 senderPlayer.sendMessage(chatUtils.getMessage("vanish.self.on", null)); // vanish.self.on
             } else if (args[0].equalsIgnoreCase("off")) {
                 if (!sender.hasPermission("xutils.vanish.self")) {
@@ -47,6 +49,7 @@ public class VanishCommand implements CommandExecutor {
                     return true;
                 }
                 vanishManager.setVanished(senderPlayer, false);
+                assert senderPlayer != null;
                 senderPlayer.sendMessage(chatUtils.getMessage("vanish.self.off", null)); // vanish.self.off
             } else {
                 if (!sender.hasPermission("xplugin.vanish.others")) {
@@ -59,7 +62,7 @@ public class VanishCommand implements CommandExecutor {
                     sender.sendMessage(chatUtils.getMessage("vanish.player_not_found", null).replace("%arg%", args[0])); // vanish.player_not_found
                     return true;
                 }
-
+                assert senderPlayer != null;
                 toggleVanish(senderPlayer, target);
             }
         } else {

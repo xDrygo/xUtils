@@ -97,10 +97,6 @@ public class SpeedCommand implements CommandExecutor {
             }
             isSelf = sender instanceof Player && sender.equals(target);
         } else {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage(chatUtils.getMessage("speed.error.self_as_console", null));
-                return true;
-            }
             target = (Player) sender;
             isSelf = true;
         }

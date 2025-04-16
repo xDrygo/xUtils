@@ -3,7 +3,6 @@ package org.eldrygo.XUtils.Handlers.Commands;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.eldrygo.XUtils.Managers.CmdBlockerManager;
@@ -40,17 +39,14 @@ public class XUtilsCommand implements CommandExecutor {
 
         String action = args[0];
 
-        switch (action) {
-            case "reload" -> {
-                if (!sender.hasPermission("xutils.reload") && !sender.isOp()) {
-                    sender.sendMessage(chatUtils.getMessage("error.no_permission", (Player) sender));
-                } else {
-                    handleReload(sender);
-                }
+        if (action.equals("reload")) {
+            if (!sender.hasPermission("xutils.reload") && !sender.isOp()) {
+                sender.sendMessage(chatUtils.getMessage("error.no_permission", (Player) sender));
+            } else {
+                handleReload(sender);
             }
-            default -> {
-                sender.sendMessage(chatUtils.getMessage("xutils.command.usage", null));
-            }
+        } else {
+            sender.sendMessage(chatUtils.getMessage("xutils.command.usage", null));
         }
         return false;
     }
@@ -58,7 +54,6 @@ public class XUtilsCommand implements CommandExecutor {
     public void handleReload(CommandSender sender) {
         try {
             try {
-                FileConfiguration config = plugin.getConfig();
                 plugin.reloadConfig();
                 plugin.config = plugin.getConfig();
                 plugin.getLogger().info("✅ The config.yml file has been loaded successfully.");

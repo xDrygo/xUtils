@@ -7,8 +7,6 @@ import org.bukkit.entity.Player;
 import org.eldrygo.XUtils.Managers.ConfigManager;
 import org.eldrygo.XUtils.XUtils;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -70,13 +68,5 @@ public class ChatUtils {
         message = message.replace("%prefix%", configManager.getPrefix());
 
         return ChatUtils.formatColor(message);
-    }
-    public List<String> getMessageList(String path) {
-        // Accede a la instancia de messagesConfig directamente
-        List<String> messages = configManager.getMessageConfig().getStringList(path);
-        if (messages == null) {
-            return new ArrayList<>();  // Devuelve una lista vacía si no se encuentra el mensaje
-        }
-        return messages;  // Retorna la lista de mensajes
     }
 }

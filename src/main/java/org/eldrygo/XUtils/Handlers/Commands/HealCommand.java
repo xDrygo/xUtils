@@ -24,7 +24,7 @@ public class HealCommand implements CommandExecutor {
 
         if (args.length == 0) {
             // Autocuración
-            if (!(sender instanceof Player)) {
+            if (!(sender instanceof Player player)) {
                 sender.sendMessage(chatUtils.getMessage("heal.self.only_player", null));
                 return true;
             }
@@ -34,10 +34,8 @@ public class HealCommand implements CommandExecutor {
                 return true;
             }
 
-            Player player = (Player) sender;
             healPlayer(player);
             player.sendMessage(chatUtils.getMessage("heal.self.success", player));
-            return true;
 
         } else {
             // Curar a todos con *
@@ -77,8 +75,8 @@ public class HealCommand implements CommandExecutor {
             if (!sender.equals(target)) {
                 target.sendMessage(chatUtils.getMessage("heal.other.target", target).replace("%sender%", sender.getName()));
             }
-            return true;
         }
+        return true;
     }
 
     private void healPlayer(Player player) {

@@ -23,8 +23,8 @@ public class WarpCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        if (!hasPermission(sender, "xutils.warp")) return noPermission(sender);
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String @NotNull [] args) {
+        if (hasPermission(sender, "xutils.warp")) return noPermission(sender);
 
         if (args.length == 0) {
             sender.sendMessage(chatUtils.getMessage("warp.error.usage", null));
@@ -33,16 +33,17 @@ public class WarpCommand implements CommandExecutor {
 
         String subcommand = args[0].toLowerCase();
 
-        switch (subcommand) {
-            case "set":
-                if (!hasPermission(sender, "xutils.warp.set")) return noPermission(sender);
-                return handleSet(sender, args);
-            case "del":
-                if (!hasPermission(sender, "xutils.warp.del")) return noPermission(sender);
-                return handleDelete(sender, args);
-            default:
-                return handleTeleport(sender, args);
-        }
+        return switch (subcommand) {
+            case "set" -> {
+                if (hasPermission(sender, "xutils.warp.set")) yield noPermission(sender);
+                yield handleSet(sender, args);
+            }
+            case "del" -> {
+                if (hasPermission(sender, "xutils.warp.del")) yield noPermission(sender);
+                yield handleDelete(sender, args);
+            }
+            default -> handleTeleport(sender, args);
+        };
     }
 
     private boolean handleSet(CommandSender sender, String[] args) {
@@ -110,7 +111,7 @@ public class WarpCommand implements CommandExecutor {
         }
 
         if (args.length == 1 && sender instanceof Player player) {
-            if (!hasPermission(sender, "xutils.warp.tp.self")) return noPermission(sender);
+            if (hasPermission(sender, "xutils.warp.tp.self")) return noPermission(sender);
             player.teleport(loc);
             player.sendMessage(chatUtils.getMessage("warp.teleport.success.self", null).replace("%warp%", warpName));
             return true;
@@ -120,7 +121,7 @@ public class WarpCommand implements CommandExecutor {
             String targetName = args[1];
 
             if (targetName.equals("*")) {
-                if (!hasPermission(sender, "xutils.warp.tp.all")) return noPermission(sender);
+                if (hasPermission(sender, "xutils.warp.tp.all")) return noPermission(sender);
                 for (Player online : playerUtils.getAllPlayers()) {
                     online.teleport(loc);
                     online.sendMessage(chatUtils.getMessage("warp.teleport.success.all.target", null).replace("%warp%", warpName));
@@ -135,7 +136,7 @@ public class WarpCommand implements CommandExecutor {
                 return true;
             }
 
-            if (!hasPermission(sender, "xutils.warp.tp.other")) return noPermission(sender);
+            if (hasPermission(sender, "xutils.warp.tp.other")) return noPermission(sender);
 
             target.teleport(loc);
             target.sendMessage(chatUtils.getMessage("warp.teleport.success.other.target", null)
@@ -145,9 +146,7 @@ public class WarpCommand implements CommandExecutor {
             return true;
         }
 
-        if (!(sender instanceof Player)) {
-            sender.sendMessage(chatUtils.getMessage("warp.error.only_players", null));
-        }
+        sender.sendMessage(chatUtils.getMessage("warp.error.only_players", null));
 
         return true;
     }
@@ -166,7 +165,7 @@ public class WarpCommand implements CommandExecutor {
     }
 
     private boolean hasPermission(CommandSender sender, String node) {
-        return sender.hasPermission(node) || sender.hasPermission("xutils.admin") || sender.isOp();
+        return !sender.hasPermission(node) && !sender.hasPermission("xutils.admin") && !sender.isOp();
     }
 
     private boolean noPermission(CommandSender sender) {

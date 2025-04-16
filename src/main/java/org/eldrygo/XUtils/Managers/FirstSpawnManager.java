@@ -6,8 +6,6 @@ import com.google.gson.JsonParser;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.eldrygo.XUtils.XUtils;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 import java.io.File;
 import java.io.FileReader;

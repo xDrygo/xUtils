@@ -19,18 +19,16 @@ public class FirstSpawnCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String @NotNull [] args) {
         if (!sender.hasPermission("xutils.firstspawn.set")) {
             sender.sendMessage(chatUtils.getMessage("error.no_permission", null));
             return true;
         }
 
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player player)) {
             sender.sendMessage(chatUtils.getMessage("firstspawn.error.only_players", null));
             return true;
         }
-
-        Player player = (Player) sender;
 
         firstSpawnManager.setFirstSpawnLocation(player.getLocation());
 
