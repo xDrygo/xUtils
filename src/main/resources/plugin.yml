@@ -1,6 +1,6 @@
 main: org.eldrygo.XUtils.XUtils
 name: xUtils
-version: 0.1.01
+version: 0.1.08
 api-version: 1.21
 authors: [Drygo]
 softdepend:
@@ -17,6 +17,8 @@ commands:
     description: "Manage warp system."
   firstspawn:
     description: "Manage firstspawn system."
+  vanish:
+    description: "Manage vanish system."
 permissions:
   xutils:
     default: false
@@ -65,3 +67,12 @@ permissions:
                 default: false
       xutils.firstspawn.set:
         default: false
+      xutils.cmdblocker.bypass:
+        default: false
+      xutils.vanish:
+        default: false
+        children:
+          xutils.vanish.self:
+            default: false
+          xutils.vanish.others:
+            default: false

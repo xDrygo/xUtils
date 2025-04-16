@@ -26,6 +26,9 @@ public class WarpManager {
         if (!warpsFile.exists()) {
             save(); // Crear archivo vacío
         }
+        if (this.data == null) {
+            this.data = new JSONObject();
+        }
 
         load();
     }
@@ -71,10 +74,6 @@ public class WarpManager {
         return data.keySet();
     }
 
-    public void reloadWarpsConfig() {
-        load();
-    }
-
     private void load() {
         try (FileReader reader = new FileReader(warpsFile)) {
             JSONParser parser = new JSONParser();
@@ -87,7 +86,10 @@ public class WarpManager {
         }
     }
 
-    private void save() {
+    public void save() {
+        if (this.data == null) {
+            this.data = new JSONObject();
+        }
         try (FileWriter writer = new FileWriter(warpsFile)) {
             writer.write(data.toJSONString());
         } catch (IOException e) {

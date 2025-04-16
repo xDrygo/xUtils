@@ -22,7 +22,7 @@ public class FirstSpawnManager {
 
     public FirstSpawnManager(XUtils plugin) {
         this.plugin = plugin;
-        this.firstSpawnFile = new File(plugin.getDataFolder(), "firstspawn.json");
+        this.firstSpawnFile = new File(plugin.getDataFolder(), "data/firstspawn.json");
         loadFirstSpawnData();
     }
 
@@ -86,18 +86,36 @@ public class FirstSpawnManager {
 
     // Obtiene la ubicación del primer spawn desde el archivo JSON
     public Location getFirstSpawnLocation() {
-        String worldName = firstSpawnData.get("world").getAsString();
-        double x = firstSpawnData.get("x").getAsDouble();
-        double y = firstSpawnData.get("y").getAsDouble();
-        double z = firstSpawnData.get("z").getAsDouble();
-        float yaw = firstSpawnData.get("yaw").getAsFloat();
-        float pitch = firstSpawnData.get("pitch").getAsFloat();
-
-        World world = plugin.getServer().getWorld(worldName);
-        if (world == null) {
-            return null; // El mundo no existe
+        if (firstSpawnData == null
+                || !firstSpawnData.has("world")
+                || !firstSpawnData.has("x")
+                || !firstSpawnData.has("y")
+                || !firstSpawnData.has("z")
+                || !firstSpawnData.has("yaw")
+                || !firstSpawnData.has("pitch")) {
+            plugin.getLogger().warning("⚠️ Datos incompletos en firstspawn.json. Se usará una ubicación por defecto.");
+            return null;
         }
-        return new Location(world, x, y, z, yaw, pitch);
+
+        try {
+            String worldName = firstSpawnData.get("world").getAsString();
+            double x = firstSpawnData.get("x").getAsDouble();
+            double y = firstSpawnData.get("y").getAsDouble();
+            double z = firstSpawnData.get("z").getAsDouble();
+            float yaw = firstSpawnData.get("yaw").getAsFloat();
+            float pitch = firstSpawnData.get("pitch").getAsFloat();
+
+            World world = plugin.getServer().getWorld(worldName);
+            if (world == null) {
+                plugin.getLogger().warning("❌ Mundo '" + worldName + "' no encontrado.");
+                return null;
+            }
+
+            return new Location(world, x, y, z, yaw, pitch);
+        } catch (Exception e) {
+            plugin.getLogger().severe("❌ Error al leer firstspawn.json: " + e.getMessage());
+            return null;
+        }
     }
 
     // Establece la ubicación del primer spawn en el archivo JSON

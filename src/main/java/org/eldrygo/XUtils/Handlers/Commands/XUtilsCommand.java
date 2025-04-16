@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.eldrygo.XUtils.Managers.CmdBlockerManager;
 import org.eldrygo.XUtils.Managers.ConfigManager;
 import org.eldrygo.XUtils.Utils.ChatUtils;
 import org.eldrygo.XUtils.XUtils;
@@ -21,21 +22,23 @@ public class XUtilsCommand implements CommandExecutor {
     private final XUtils plugin;
     private final ChatUtils chatUtils;
     private final ConfigManager configManager;
+    private final CmdBlockerManager cmdBlockerManager;
 
-    public XUtilsCommand(XUtils plugin, ChatUtils chatUtils, ConfigManager configManager) {
+    public XUtilsCommand(XUtils plugin, ChatUtils chatUtils, ConfigManager configManager, CmdBlockerManager cmdBlockerManager) {
         this.plugin = plugin;
         this.chatUtils = chatUtils;
         this.configManager = configManager;
+        this.cmdBlockerManager = cmdBlockerManager;
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        String action = args[0];
-
         if (args.length < 1) {
             sender.sendMessage(chatUtils.getMessage("xutils.command.usage", null));
             return true;
         }
+
+        String action = args[0];
 
         switch (action) {
             case "reload" -> {
@@ -97,6 +100,7 @@ public class XUtilsCommand implements CommandExecutor {
                 plugin.getLogger().severe("❌ Failed to load messages configuration due to an unexpected error: " + e.getMessage());
                 e.printStackTrace();
             }
+            cmdBlockerManager.reload();
         } catch (Exception e) {
             sender.sendMessage(chatUtils.getMessage("xutils.command.reload.error", (Player) sender));
             return;

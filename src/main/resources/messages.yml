@@ -58,11 +58,30 @@ warp:
         sender: "%prefix% #a0ff72✔ You teleported %target% to warp %warp%."
         target: "%prefix% #a0ff72✔ %sender% has teleported you to warp %warp%."
       self: "%prefix% #a0ff72✔ You have teleported to warp %warp%."
+void_tp:
+  on_fall: "%prefix% #fff18d📰 You've fallen too low."
 firstspawn:
   error:
     only_players: "%prefix% #FF0000🚫 You can only set the first spawn in-game."
   set:
     success: "%prefix% #a0ff72✔ Sucessfully set first spawn."
+cmd_blocker:
+  block_command: "#FF0000🚫 You have no permission to use this command."
+vanish:
+  usage:  "%prefix% #FF0000🚫 Incorrect usage. &r&7Use &f/vanish <on / off / player>"
+  error:
+    player_not_found: "%prefix% #FF0000🚫 Can't find player %arg%."
+    only_players: "%prefix% #FF0000🚫 Need to specify a player when use as console."
+  self:
+    on: "%prefix% #a0ff72✔ Now you are vanished."
+    off: "%prefix% #ff7272❌ Now you're no longer vanished."
+  other:
+    target:
+      on: "%prefix% #a0ff72✔ Now you are vanished."
+      off: "%prefix% #ff7272❌ Now you're no longer vanished."
+    sender:
+      on: "%prefix% #a0ff72✔ Successfully vanished %target%."
+      off: "%prefix% #ff7272❌ Successfully vanished %target%."
 error:
   no_permission: "%prefix% #FF0000🚫 You have no permission to use this command."
 

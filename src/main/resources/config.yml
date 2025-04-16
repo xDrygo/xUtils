@@ -3,3 +3,8 @@ settings:
     enabled: true
     player_list:
       - Player
+  void_tp:
+    send_message: false
+    trigger_y: 0
+    worlds:
+      - lobby
