@@ -29,7 +29,7 @@ public class VanishCommand implements CommandExecutor {
 
         if (args.length == 0) {
             if (!(sender instanceof Player senderPlayer)) {
-                sender.sendMessage(chatUtils.getMessage("vanish.only_players", null));
+                sender.sendMessage(chatUtils.getMessage("vanish.value_only_players", null));
                 return true;
             }
             toggleVanish(senderPlayer, senderPlayer);
@@ -42,7 +42,7 @@ public class VanishCommand implements CommandExecutor {
                 }
                 vanishManager.setVanished(senderPlayer, true);
                 assert senderPlayer != null;
-                senderPlayer.sendMessage(chatUtils.getMessage("vanish.self.on", null)); // vanish.self.on
+                senderPlayer.sendMessage(chatUtils.getMessage("vanish.self.value_on", null)); // vanish.self.value_on
             } else if (args[0].equalsIgnoreCase("off")) {
                 if (!sender.hasPermission("xutils.vanish.self")) {
                     sender.sendMessage(chatUtils.getMessage("error.no_permission", null));
@@ -50,7 +50,7 @@ public class VanishCommand implements CommandExecutor {
                 }
                 vanishManager.setVanished(senderPlayer, false);
                 assert senderPlayer != null;
-                senderPlayer.sendMessage(chatUtils.getMessage("vanish.self.off", null)); // vanish.self.off
+                senderPlayer.sendMessage(chatUtils.getMessage("vanish.self.value_off", null)); // vanish.self.value_off
             } else {
                 if (!sender.hasPermission("xplugin.vanish.others")) {
                     sender.sendMessage(chatUtils.getMessage("error.no_permission", null)); /// error.no_permission
@@ -77,15 +77,15 @@ public class VanishCommand implements CommandExecutor {
         vanishManager.setVanished(target, !vanished);
 
         if (sender.equals(target)) {
-            sender.sendMessage(!vanished ? chatUtils.getMessage("vanish.self.on", null) : chatUtils.getMessage("vanish.self.off", null)); // vanish.self.on - vanish.self.off
+            sender.sendMessage(!vanished ? chatUtils.getMessage("vanish.self.value_on", null) : chatUtils.getMessage("vanish.self.value_off", null)); // vanish.self.value_on - vanish.self.value_off
         } else {
             String targetName = target.getName();
             sender.sendMessage(!vanished
-                    ? chatUtils.getMessage("vanish.other.sender.on", null).replace("%target%", targetName) // vanish.other.sender.on
-                    : chatUtils.getMessage("vanish.other.sender.off", null).replace("%target%", targetName)); // vanish.other.sender.off
+                    ? chatUtils.getMessage("vanish.other.sender.value_on", null).replace("%target%", targetName) // vanish.other.sender.value_on
+                    : chatUtils.getMessage("vanish.other.sender.value_off", null).replace("%target%", targetName)); // vanish.other.sender.value_off
             target.sendMessage(!vanished
-                    ? chatUtils.getMessage("vanish.other.target.on", null) // vanish.other.target.on
-                    : chatUtils.getMessage("vanish.other.target.off", null)); // vanish.other.target.off
+                    ? chatUtils.getMessage("vanish.other.target.value_on", null) // vanish.other.target.value_on
+                    : chatUtils.getMessage("vanish.other.target.value_off", null)); // vanish.other.target.value_off
         }
     }
 }

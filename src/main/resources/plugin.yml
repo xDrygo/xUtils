@@ -1,7 +1,7 @@
 main: org.eldrygo.XUtils.XUtils
 name: xUtils
-version: 0.1.08
-api-version: 1.21
+version: 0.1.22
+api-version: 1.20
 authors: [Drygo]
 softdepend:
   - PlaceholderAPI
@@ -19,6 +19,10 @@ commands:
     description: "Manage firstspawn system."
   vanish:
     description: "Manage vanish system."
+  announcements:
+    description: "Manage announcements."
+  ping:
+    description: "Ping display command."
 permissions:
   xutils:
     default: false
@@ -76,3 +80,7 @@ permissions:
             default: false
           xutils.vanish.others:
             default: false
+      xutils.announcement:
+        default: false
+      xutils.ping:
+        default: false

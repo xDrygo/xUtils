@@ -38,13 +38,13 @@ public class ConfigManager {
         return warpsConfig;
     }
 
-    public void reloadConfig() {
+    public void loadConfig() {
         try {
+            plugin.saveDefaultConfig();
             plugin.reloadConfig();
-            plugin.config = plugin.getConfig();
-            plugin.getLogger().info("✅ The config.yml file has been loaded successfully.");
+            plugin.getLogger().info("✅ The config.yml file successfully loaded.");
         } catch (Exception e) {
-            plugin.getLogger().severe("❌ Failed to reload plugin configuration due to an unexpected error: " + e.getMessage());
+            plugin.getLogger().severe("❌ Failed on loading config.yml: " + e.getMessage());
             e.printStackTrace();
         }
     }

@@ -68,20 +68,48 @@ firstspawn:
 cmd_blocker:
   block_command: "#FF0000🚫 You have no permission to use this command."
 vanish:
-  usage:  "%prefix% #FF0000🚫 Incorrect usage. &r&7Use &f/vanish <on / off / player>"
+  usage: "%prefix% #FF0000🚫 Incorrect usage. &r&7Use &f/vanish <on / off / player>"
+  actionbar: "&c&oYou are currently vanished."
   error:
     player_not_found: "%prefix% #FF0000🚫 Can't find player %arg%."
     only_players: "%prefix% #FF0000🚫 Need to specify a player when use as console."
   self:
-    on: "%prefix% #a0ff72✔ Now you are vanished."
-    off: "%prefix% #ff7272❌ Now you're no longer vanished."
+    value_on: "%prefix% #a0ff72✔ Now you are vanished."
+    value_off: "%prefix% #ff7272❌ Now you're no longer vanished."
   other:
     target:
-      on: "%prefix% #a0ff72✔ Now you are vanished."
-      off: "%prefix% #ff7272❌ Now you're no longer vanished."
+      value_on: "%prefix% #a0ff72✔ Now you are vanished."
+      value_off: "%prefix% #ff7272❌ Now you're no longer vanished."
     sender:
-      on: "%prefix% #a0ff72✔ Successfully vanished %target%."
-      off: "%prefix% #ff7272❌ Successfully vanished %target%."
+      value_on: "%prefix% #a0ff72✔ Successfully vanished %target%."
+      value_off: "%prefix% #ff7272❌ Successfully vanished %target%."
+announcements:
+  command:
+    no_args: "%prefix% #FF0000🚫 Need to specify a action."
+    value_on:
+      start: "%prefix% #a0ff72✔ Succesfully set the announcements on."
+      already: "%prefix% #FF0000🚫 Announcements are already on."
+    value_off:
+      start: "%prefix% #ff7272❌ Succesfully set the announcements off."
+      already: "%prefix% #FF0000🚫 Announcements are already off."
+  string:
+    - " "
+    - " &f&lᴀɴᴜɴᴄɪᴏ: #5583FF&lZ#537CFF&le#5076FF&lp#4E6FFF&lh#4C69FF&ly#4962FF&lH#475CFF&lo#4455FF&ls#424FFF&lt#4048FF&li#3D42FF&ln#3B3BFF&lg"
+    - " "
+    - " #fff18d¿Sabías que, #6e95ffZephyHosting &r#fff18des el mejor hosting que pueden"
+    - " #fff18descoger para hostear su servidor, por su alto rendimiento y"
+    - " #fff18dprecios competitivos?"
+    - " "
+    - " #fae761¡Recuerden usar el &lcodigo &f\"SUNNY\" #fae761para tener un"
+    - " #fae761&l25% &r#fae761de &ldescuento&r#fae761 en la compra de &lcualquier servidor&r#fae761!"
+    - " "
+ping:
+  error:
+    only_player: "%prefix% #FF0000🚫 Need to be in-game to get your ping."
+    player_not_found: "%prefix% #FF0000🚫 Can't find player %arg%"
+  success:
+    self: "%prefix% #fff18d📰 Your ping is %ping%"
+    other: "%prefix% #fff18d📰 %target%'s ping is %ping%"
 error:
   no_permission: "%prefix% #FF0000🚫 You have no permission to use this command."
 

@@ -17,11 +17,6 @@ public class VanishListener implements Listener {
     }
 
     @EventHandler
-    public void onJoin(PlayerJoinEvent event) {
-        vanishManager.handleJoin(event.getPlayer());
-    }
-
-    @EventHandler
     public void onPickup(PlayerPickupItemEvent e) {
         if (vanishManager.isVanished(e.getPlayer())) e.setCancelled(true);
     }

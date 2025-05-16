@@ -4,7 +4,9 @@ settings:
     player_list:
       - Player
   void_tp:
-    send_message: false
+    send_message: true
     trigger_y: 0
     worlds:
       - lobby
+  announcements:
+    interval: 30 # En segundos

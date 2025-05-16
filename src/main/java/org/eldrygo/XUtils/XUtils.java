@@ -1,13 +1,11 @@
 package org.eldrygo.XUtils;
 
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.eldrygo.XUtils.Managers.*;
 import org.eldrygo.XUtils.Utils.*;
 
 public class XUtils extends JavaPlugin {
     public String version;
-    public FileConfiguration config;
     private LogsUtils logsUtils;
     private WarpManager warpManager;
 
@@ -21,10 +19,12 @@ public class XUtils extends JavaPlugin {
         this.warpManager = new WarpManager(this);
         ChatUtils chatUtils = new ChatUtils(configManager, this);
         CmdBlockerManager cmdBlockerManager = new CmdBlockerManager(this);
-        VanishManager vanishManager = new VanishManager(this);
-        LoadUtils loadUtils = new LoadUtils(this, configManager, warpManager, chatUtils, firstSpawnManager, playerUtils, cmdBlockerManager, vanishManager);
+        VanishManager vanishManager = new VanishManager(this, configManager);
+        AnnouncementManager announcementManager = new AnnouncementManager(this, configManager);
+        LoadUtils loadUtils = new LoadUtils(this, configManager, warpManager, chatUtils, firstSpawnManager, playerUtils, cmdBlockerManager, vanishManager, announcementManager);
         loadUtils.loadFeatures();
         logsUtils.sendStartupMessage();
+        announcementManager.start();
     }
 
     @Override

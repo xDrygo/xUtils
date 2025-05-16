@@ -16,8 +16,9 @@ public class LoadUtils {
     private final PlayerUtils playerUtils;
     private final CmdBlockerManager cmdBlockerManager;
     private final VanishManager vanishManager;
+    private final AnnouncementManager announcementManager;
 
-    public LoadUtils(XUtils plugin, ConfigManager configManager, WarpManager warpManager, ChatUtils chatUtils, FirstSpawnManager firstSpawnManager, PlayerUtils playerUtils, CmdBlockerManager cmdBlockerManager, VanishManager vanishManager) {
+    public LoadUtils(XUtils plugin, ConfigManager configManager, WarpManager warpManager, ChatUtils chatUtils, FirstSpawnManager firstSpawnManager, PlayerUtils playerUtils, CmdBlockerManager cmdBlockerManager, VanishManager vanishManager, AnnouncementManager announcementManager) {
         this.plugin = plugin;
         this.configManager = configManager;
         this.warpManager = warpManager;
@@ -26,6 +27,7 @@ public class LoadUtils {
         this.playerUtils = playerUtils;
         this.cmdBlockerManager = cmdBlockerManager;
         this.vanishManager = vanishManager;
+        this.announcementManager = announcementManager;
     }
 
     public void loadFeatures() {
@@ -50,13 +52,15 @@ public class LoadUtils {
         loadWarpCommand();
         loadFirstSpawnCommand();
         loadVanishCommand();
+        loadAnnouncementsCommand();
+        loadPingCommand();
     }
 
     private void loadXUtilsCommand() {
         if (plugin.getCommand("xutils") == null) {
             plugin.getLogger().severe("❌ Error: /xutils command is not registered in plugin.yml");
         } else {
-            plugin.getCommand("xutils").setExecutor(new XUtilsCommand(plugin, chatUtils, configManager, cmdBlockerManager));
+            plugin.getCommand("xutils").setExecutor(new XUtilsCommand(chatUtils, this, cmdBlockerManager));
             plugin.getCommand("xutils").setTabCompleter(new XUtilsTabCompleter());
             plugin.getLogger().info("✅ /xutils command was successfully loaded.");
         }
@@ -108,6 +112,24 @@ public class LoadUtils {
             plugin.getLogger().info("✅ /vanish command was successfully loaded.");
         }
     }
+    private void loadAnnouncementsCommand() {
+        if (plugin.getCommand("announcements") == null) {
+            plugin.getLogger().severe("❌ Error: /announcements command is not registered in plugin.yml");
+        } else {
+            plugin.getCommand("announcements").setExecutor(new AnnouncementCommand(chatUtils, announcementManager));
+            plugin.getCommand("announcements").setTabCompleter(new AnnouncementTabCompleter());
+            plugin.getLogger().info("✅ /announcements command was successfully loaded.");
+        }
+    }
+    private void loadPingCommand() {
+        if (plugin.getCommand("ping") == null) {
+            plugin.getLogger().severe("❌ Error: /ping command is not registered in plugin.yml");
+        } else {
+            plugin.getCommand("ping").setExecutor(new PingCommand(chatUtils));
+            plugin.getCommand("ping").setTabCompleter(new PingTabCompleter());
+            plugin.getLogger().info("✅ /ping command was successfully loaded.");
+        }
+    }
     private void loadPlaceholderAPI() {
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             plugin.getLogger().info("✅ PlaceholderAPI detected. Placeholders will work.");
@@ -117,14 +139,7 @@ public class LoadUtils {
     }
 
     public void loadConfigFiles() {
-        try {
-            plugin.reloadConfig();
-            plugin.config = plugin.getConfig();
-            plugin.getLogger().info("✅ The config.yml file has been loaded successfully.");
-        } catch (Exception e) {
-            plugin.getLogger().severe("❌ Failed to reload plugin configuration due to an unexpected error: " + e.getMessage());
-            e.printStackTrace();
-        }
+        configManager.loadConfig();
         configManager.reloadWarpsConfig();
         configManager.reloadMessages();
         firstSpawnManager.loadFirstSpawnData();

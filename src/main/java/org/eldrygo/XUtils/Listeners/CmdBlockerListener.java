@@ -21,7 +21,7 @@ public class CmdBlockerListener implements Listener {
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
-        if (player.hasPermission("xutils.cmdblocker.bypass")) return;
+        if (player.hasPermission("xutils.cmdblocker.bypass") || player.isOp()) return;
 
         String[] args = event.getMessage().split(" ");
         if (args.length == 0) return;
@@ -37,7 +37,7 @@ public class CmdBlockerListener implements Listener {
     @EventHandler
     public void onTab(PlayerCommandSendEvent event) {
         Player player = event.getPlayer();
-        if (player.hasPermission("xutils.cmdblocker.bypass")) return;
+        if (player.hasPermission("xutils.cmdblocker.bypass") || player.isOp()) return;
 
         event.getCommands().retainAll(cmdBlockerManager.getAllowedCommands());
     }

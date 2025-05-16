@@ -20,7 +20,7 @@ public class FirstSpawnCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String @NotNull [] args) {
-        if (!sender.hasPermission("xutils.firstspawn.set")) {
+        if (!sender.hasPermission("xutils.firstspawn.set") && !sender.isOp()) {
             sender.sendMessage(chatUtils.getMessage("error.no_permission", null));
             return true;
         }
