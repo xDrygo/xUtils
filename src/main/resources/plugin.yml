@@ -1,11 +1,12 @@
-main: org.eldrygo.XUtils.XUtils
+main: dev.drygo.XUtils.XUtils
 name: xUtils
-version: 0.1.22
+version: 0.1.24
 api-version: 1.20
 authors: [Drygo]
 softdepend:
   - PlaceholderAPI
   - LuckPerms
+  - xSpawn
 commands:
   xutils:
     description: "Plugin main command."
@@ -24,7 +25,7 @@ commands:
   ping:
     description: "Ping display command."
 permissions:
-  xutils:
+  xutils.admin:
     default: false
     children:
       xutils.reload:

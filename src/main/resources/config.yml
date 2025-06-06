@@ -9,4 +9,5 @@ settings:
     worlds:
       - lobby
   announcements:
+    enabled: false
     interval: 30 # En segundos
