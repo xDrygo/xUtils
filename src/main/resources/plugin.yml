@@ -16,8 +16,6 @@ commands:
     description: "Heal and feeds the executor."
   warp:
     description: "Manage warp system."
-  firstspawn:
-    description: "Manage firstspawn system."
   vanish:
     description: "Manage vanish system."
   announcements:
@@ -70,8 +68,6 @@ permissions:
                 default: false
               xutils.warp.tp.*:
                 default: false
-      xutils.firstspawn.set:
-        default: false
       xutils.cmdblocker.bypass:
         default: false
       xutils.vanish:
