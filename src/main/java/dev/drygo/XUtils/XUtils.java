@@ -14,7 +14,6 @@ public class XUtils extends JavaPlugin {
         this.version = getDescription().getVersion();
         this.logsUtils = new LogsUtils(this);
         PlayerUtils playerUtils = new PlayerUtils(this);
-        FirstSpawnManager firstSpawnManager = new FirstSpawnManager(this);
         ConfigManager configManager = new ConfigManager(this);
         this.warpManager = new WarpManager(this);
         ChatUtils chatUtils = new ChatUtils(configManager, this);
